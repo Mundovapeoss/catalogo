@@ -3,21 +3,43 @@
 <head>
 <meta charset="UTF-8">
 <title>Catálogo</title>
+
 <style>
 body {
   font-family: Arial, sans-serif;
   background: #f5f5f5;
   padding: 20px;
 }
+
 .producto {
   background: white;
   padding: 15px;
+  margin-bottom: 15px;
+  border-radius: 8px;
+}
+
+.producto img {
+  width: 100%;
+  max-width: 250px;
+  display: block;
   margin-bottom: 10px;
   border-radius: 8px;
 }
+
 button {
   margin-top: 5px;
   padding: 8px;
+  cursor: pointer;
+}
+
+.sabor-btn {
+  display: block;
+  width: 100%;
+  margin-bottom: 5px;
+}
+
+li {
+  margin-bottom: 5px;
 }
 </style>
 </head>
@@ -29,23 +51,27 @@ button {
 <!-- PRODUCTO -->
 <div class="producto">
   <h3>Waka Sopro 15000 hits</h3>
+
+  <!-- IMAGEN DEL PRODUCTO -->
+  <img src="https://via.placeholder.com/250" alt="Waka Sopro 15000">
+
   <p>Precio: $350</p>
 
-  <select id="sabor-waka">
-    <option value="Strawberry Kiwi">Strawberry Kiwi</option>
-    <option value="Fruit Punch">Fruit Punch</option>
-    <option value="Mango Ice">Mango Ice</option>
-    <option value="Blueberry">Blueberry</option>
-  </select>
+  <!-- SABORES -->
+  <button class="sabor-btn" onclick="agregarProducto('Waka Sopro 15000', 'Strawberry Kiwi', 350)">
+    Agregar Strawberry Kiwi
+  </button>
 
-  <br><br>
+  <button class="sabor-btn" onclick="agregarProducto('Waka Sopro 15000', 'Fruit Punch', 350)">
+    Agregar Fruit Punch
+  </button>
 
-  <button onclick="agregarProducto(
-    'Waka Sopro 15000',
-    350,
-    document.getElementById('sabor-waka').value
-  )">
-    Agregar
+  <button class="sabor-btn" onclick="agregarProducto('Waka Sopro 15000', 'Mango Ice', 350)">
+    Agregar Mango Ice
+  </button>
+
+  <button class="sabor-btn" onclick="agregarProducto('Waka Sopro 15000', 'Blueberry', 350)">
+    Agregar Blueberry
   </button>
 </div>
 
@@ -57,25 +83,35 @@ button {
 <script>
 let carrito = [];
 
-function agregarProducto(nombre, precio, sabor) {
-  carrito.push(`${nombre} - ${sabor} - $${precio}`);
+function agregarProducto(nombre, sabor, precio) {
+  carrito.push({ nombre, sabor, precio });
+  actualizarCarrito();
+}
+
+function quitarProducto(index) {
+  carrito.splice(index, 1);
   actualizarCarrito();
 }
 
 function actualizarCarrito() {
   let ul = document.getElementById("carrito");
   ul.innerHTML = "";
-  carrito.forEach(item => {
+
+  carrito.forEach((item, index) => {
     let li = document.createElement("li");
-    li.textContent = item;
+    li.innerHTML = `
+      ${item.nombre} - ${item.sabor} - $${item.precio}
+      <button onclick="quitarProducto(${index})">❌</button>
+    `;
     ul.appendChild(li);
   });
 }
 
 function enviarWhatsApp() {
   let mensaje = "Hola, quiero pedir:\n";
+
   carrito.forEach(item => {
-    mensaje += `- ${item}\n`;
+    mensaje += `- ${item.nombre} (${item.sabor}) - $${item.precio}\n`;
   });
 
   let telefono = "529841964069";
@@ -85,4 +121,4 @@ function enviarWhatsApp() {
 </script>
 
 </body>
-</html
+</html>
