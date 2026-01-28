@@ -75,7 +75,7 @@ function enviarWhatsApp() {
     mensaje += `- ${p.nombre} ($${p.precio})\n`;
   });
   
-  let telefono = "5219841964069";
+  let telefono = "529841964069";
   let url = `https://wa.me/${telefono}?text=${encodeURIComponent(mensaje)}`;
   window.open(url);
 }
