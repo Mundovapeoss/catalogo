@@ -8,13 +8,13 @@
 body {
   font-family: Arial, sans-serif;
   background: #939393;
-  padding: 200px;
+  padding: 20px;
 }
 
 .producto {
   background: #dddddd;
-  padding: 100px;
-  margin-bottom: 15px;
+  padding: 20px;
+  margin-bottom: 20px;
   border-radius: 8px;
 }
 
@@ -22,12 +22,12 @@ body {
   width: 100%;
   max-width: 250px;
   display: block;
-  margin-bottom: 10px;
+  margin: 0 auto 10px auto;
   border-radius: 8px;
 }
 
 button {
-  margin-top: 5px;
+  margin: 5px 0;
   padding: 8px;
   cursor: pointer;
 }
@@ -35,11 +35,10 @@ button {
 .sabor-btn {
   display: block;
   width: 100%;
-  margin-bottom: 5px;
 }
 
 li {
-  margin-bottom: 5px;
+  margin-bottom: 8px;
 }
 </style>
 </head>
@@ -52,25 +51,23 @@ li {
 <div class="producto">
   <h3>Waka Sopro 15000 hits</h3>
 
-  <!-- IMAGEN DEL PRODUCTO -->
   <img src="wakasopro15000.jpg" alt="Waka Sopro 15000">
 
-  <p>Precio: $350</p>
+  <p><strong>Precio:</strong> $350 MXN</p>
 
-  <!-- SABORES -->
-  <button class="sabor-btn" onclick="agregarProducto('Waka Sopro 15000', 'Strawberry Kiwi', 350)">
+  <button class="sabor-btn" onclick="agregarProducto('Waka Sopro 15000','Strawberry Kiwi',350)">
     Agregar Strawberry Kiwi
   </button>
 
-  <button class="sabor-btn" onclick="agregarProducto('Waka Sopro 15000', 'Fruit Punch', 350)">
+  <button class="sabor-btn" onclick="agregarProducto('Waka Sopro 15000','Fruit Punch',350)">
     Agregar Fruit Punch
   </button>
 
-  <button class="sabor-btn" onclick="agregarProducto('Waka Sopro 15000', 'Mango Ice', 350)">
+  <button class="sabor-btn" onclick="agregarProducto('Waka Sopro 15000','Mango Ice',350)">
     Agregar Mango Ice
   </button>
 
-  <button class="sabor-btn" onclick="agregarProducto('Waka Sopro 15000', 'Blueberry', 350)">
+  <button class="sabor-btn" onclick="agregarProducto('Waka Sopro 15000','Blueberry',350)">
     Agregar Blueberry
   </button>
 </div>
@@ -78,13 +75,26 @@ li {
 <h2>Tu pedido</h2>
 <ul id="carrito"></ul>
 
+<p><strong>Total: $<span id="total">0</span> MXN</strong></p>
+
+<button onclick="vaciarCarrito()">🗑️ Vaciar carrito</button>
+<br><br>
 <button onclick="enviarWhatsApp()">Enviar pedido por WhatsApp</button>
 
 <script>
 let carrito = [];
 
 function agregarProducto(nombre, sabor, precio) {
-  carrito.push({ nombre, sabor, precio });
+  let existente = carrito.find(
+    item => item.nombre === nombre && item.sabor === sabor
+  );
+
+  if (existente) {
+    existente.cantidad++;
+  } else {
+    carrito.push({ nombre, sabor, precio, cantidad: 1 });
+  }
+
   actualizarCarrito();
 }
 
@@ -93,26 +103,43 @@ function quitarProducto(index) {
   actualizarCarrito();
 }
 
+function vaciarCarrito() {
+  carrito = [];
+  actualizarCarrito();
+}
+
 function actualizarCarrito() {
   let ul = document.getElementById("carrito");
+  let totalSpan = document.getElementById("total");
+
   ul.innerHTML = "";
+  let total = 0;
 
   carrito.forEach((item, index) => {
+    let subtotal = item.precio * item.cantidad;
+    total += subtotal;
+
     let li = document.createElement("li");
     li.innerHTML = `
-      ${item.nombre} - ${item.sabor} - $${item.precio}
+      ${item.nombre} - ${item.sabor}
+      <br>
+      Cantidad: ${item.cantidad} | Subtotal: $${subtotal} MXN
       <button onclick="quitarProducto(${index})">❌</button>
     `;
     ul.appendChild(li);
   });
+
+  totalSpan.textContent = total;
 }
 
 function enviarWhatsApp() {
   let mensaje = "Hola, quiero pedir:\n";
 
   carrito.forEach(item => {
-    mensaje += `- ${item.nombre} (${item.sabor}) - $${item.precio}\n`;
+    mensaje += `- ${item.nombre} (${item.sabor}) x${item.cantidad} = $${item.precio * item.cantidad} MXN\n`;
   });
+
+  mensaje += `\nTotal: $${document.getElementById("total").textContent} MXN`;
 
   let telefono = "529841964069";
   let url = `https://wa.me/${telefono}?text=${encodeURIComponent(mensaje)}`;
