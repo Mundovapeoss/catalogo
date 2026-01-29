@@ -2,43 +2,62 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Catálogo</title>
 
 <style>
 body {
   font-family: Arial, sans-serif;
   background: #939393;
-  padding: 20px;
+  padding: 10px;
+}
+
+h1, h2 {
+  text-align: center;
 }
 
 .producto {
   background: #dddddd;
-  padding: 20px;
-  margin-bottom: 20px;
-  border-radius: 8px;
+  padding: 15px;
+  margin-bottom: 15px;
+  border-radius: 10px;
 }
 
 .producto img {
   width: 100%;
-  max-width: 250px;
+  max-width: 220px;
   display: block;
   margin: 0 auto 10px auto;
   border-radius: 8px;
 }
 
 button {
-  margin: 5px 0;
-  padding: 8px;
+  padding: 10px;
+  margin: 4px 0;
+  font-size: 16px;
   cursor: pointer;
 }
 
 .sabor-btn {
-  display: block;
   width: 100%;
 }
 
+ul {
+  padding-left: 0;
+}
+
 li {
+  list-style: none;
+  background: #eee;
+  padding: 10px;
   margin-bottom: 8px;
+  border-radius: 8px;
+}
+
+.cantidad-btn {
+  padding: 5px 10px;
+  font-size: 18px;
+  margin: 0 5px;
 }
 </style>
 </head>
@@ -47,59 +66,70 @@ li {
 
 <h1>Catálogo</h1>
 
-<!-- PRODUCTO -->
+<!-- WAKA -->
 <div class="producto">
-  <h3>Waka Sopro 15000 hits</h3>
-
+  <h3>Waka Sopro 15000 Hits</h3>
   <img src="wakasopro15000.jpg" alt="Waka Sopro 15000">
-
   <p><strong>Precio:</strong> $350 MXN</p>
 
-  <button class="sabor-btn" onclick="agregarProducto('Waka Sopro 15000','Strawberry Kiwi',350)">
-    Agregar Strawberry Kiwi
-  </button>
+  <button class="sabor-btn" onclick="agregarProducto('Waka Sopro 15000','Strawberry Kiwi',350)">Agregar Strawberry Kiwi</button>
+  <button class="sabor-btn" onclick="agregarProducto('Waka Sopro 15000','Fruit Punch',350)">Agregar Fruit Punch</button>
+  <button class="sabor-btn" onclick="agregarProducto('Waka Sopro 15000','Mango Ice',350)">Agregar Mango Ice</button>
+  <button class="sabor-btn" onclick="agregarProducto('Waka Sopro 15000','Blueberry',350)">Agregar Blueberry</button>
+</div>
 
-  <button class="sabor-btn" onclick="agregarProducto('Waka Sopro 15000','Fruit Punch',350)">
-    Agregar Fruit Punch
-  </button>
+<!-- DEATHROW -->
+<div class="producto">
+  <h3>DeathRow 7000 Hits</h3>
+  <p><strong>Precio:</strong> $100 MXN</p>
 
-  <button class="sabor-btn" onclick="agregarProducto('Waka Sopro 15000','Mango Ice',350)">
-    Agregar Mango Ice
-  </button>
+  <button class="sabor-btn" onclick="agregarProducto('DeathRow 7000','Watermelon Ice',100)">Agregar Watermelon Ice</button>
+  <button class="sabor-btn" onclick="agregarProducto('DeathRow 7000','Strawberry Ice',100)">Agregar Strawberry Ice</button>
+  <button class="sabor-btn" onclick="agregarProducto('DeathRow 7000','Blue Razz',100)">Agregar Blue Razz</button>
+  <button class="sabor-btn" onclick="agregarProducto('DeathRow 7000','Grape Ice',100)">Agregar Grape Ice</button>
+  <button class="sabor-btn" onclick="agregarProducto('DeathRow 7000','Mango',100)">Agregar Mango</button>
+</div>
 
-  <button class="sabor-btn" onclick="agregarProducto('Waka Sopro 15000','Blueberry',350)">
-    Agregar Blueberry
-  </button>
+<!-- SNOOPY -->
+<div class="producto">
+  <h3>SnoopySmoke 15000 Hits</h3>
+  <p><strong>Precio:</strong> $100 MXN</p>
+
+  <button class="sabor-btn" onclick="agregarProducto('SnoopySmoke 15000','Peach Ice',100)">Agregar Peach Ice</button>
+  <button class="sabor-btn" onclick="agregarProducto('SnoopySmoke 15000','Strawberry Banana',100)">Agregar Strawberry Banana</button>
+  <button class="sabor-btn" onclick="agregarProducto('SnoopySmoke 15000','Blueberry',100)">Agregar Blueberry</button>
+  <button class="sabor-btn" onclick="agregarProducto('SnoopySmoke 15000','Watermelon',100)">Agregar Watermelon</button>
+  <button class="sabor-btn" onclick="agregarProducto('SnoopySmoke 15000','Mint',100)">Agregar Mint</button>
 </div>
 
 <h2>Tu pedido</h2>
 <ul id="carrito"></ul>
 
-<p><strong>Total: $<span id="total">0</span> MXN</strong></p>
+<p style="text-align:center;"><strong>Total: $<span id="total">0</span> MXN</strong></p>
 
-<button onclick="vaciarCarrito()">🗑️ Vaciar carrito</button>
+<button style="width:100%;" onclick="vaciarCarrito()">🗑️ Vaciar carrito</button>
 <br><br>
-<button onclick="enviarWhatsApp()">Enviar pedido por WhatsApp</button>
+<button style="width:100%;" onclick="enviarWhatsApp()">Enviar pedido por WhatsApp</button>
 
 <script>
 let carrito = [];
 
 function agregarProducto(nombre, sabor, precio) {
-  let existente = carrito.find(
-    item => item.nombre === nombre && item.sabor === sabor
-  );
+  let item = carrito.find(p => p.nombre === nombre && p.sabor === sabor);
 
-  if (existente) {
-    existente.cantidad++;
+  if (item) {
+    item.cantidad++;
   } else {
     carrito.push({ nombre, sabor, precio, cantidad: 1 });
   }
-
   actualizarCarrito();
 }
 
-function quitarProducto(index) {
-  carrito.splice(index, 1);
+function cambiarCantidad(index, cambio) {
+  carrito[index].cantidad += cambio;
+  if (carrito[index].cantidad <= 0) {
+    carrito.splice(index, 1);
+  }
   actualizarCarrito();
 }
 
@@ -111,7 +141,6 @@ function vaciarCarrito() {
 function actualizarCarrito() {
   let ul = document.getElementById("carrito");
   let totalSpan = document.getElementById("total");
-
   ul.innerHTML = "";
   let total = 0;
 
@@ -121,10 +150,11 @@ function actualizarCarrito() {
 
     let li = document.createElement("li");
     li.innerHTML = `
-      ${item.nombre} - ${item.sabor}
-      <br>
-      Cantidad: ${item.cantidad} | Subtotal: $${subtotal} MXN
-      <button onclick="quitarProducto(${index})">❌</button>
+      <strong>${item.nombre}</strong><br>
+      ${item.sabor}<br>
+      $${item.precio} MXN x ${item.cantidad} = $${subtotal} MXN<br>
+      <button class="cantidad-btn" onclick="cambiarCantidad(${index}, -1)">➖</button>
+      <button class="cantidad-btn" onclick="cambiarCantidad(${index}, 1)">➕</button>
     `;
     ul.appendChild(li);
   });
@@ -142,8 +172,7 @@ function enviarWhatsApp() {
   mensaje += `\nTotal: $${document.getElementById("total").textContent} MXN`;
 
   let telefono = "529841964069";
-  let url = `https://wa.me/${telefono}?text=${encodeURIComponent(mensaje)}`;
-  window.open(url);
+  window.open(`https://wa.me/${telefono}?text=${encodeURIComponent(mensaje)}`);
 }
 </script>
 
