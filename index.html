@@ -3,24 +3,36 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Catálogo</title>
+<title>Catálogo Vapes</title>
 
 <style>
 body {
   font-family: Arial, sans-serif;
-  background: #939393;
-  padding: 100px;
+  margin: 0;
+  padding: 0;
+  color: #fff;
+  background: 
+    linear-gradient(rgba(0,0,0,.85), rgba(0,0,0,.85)),
+    url("https://images.unsplash.com/photo-1519681393784-d120267933ba");
+  background-size: cover;
+  background-attachment: fixed;
 }
 
 h1, h2 {
   text-align: center;
 }
 
+.container {
+  max-width: 900px;
+  margin: auto;
+  padding: 15px;
+}
+
 .producto {
-  background: #dddddd;
-  padding: 200px;
-  margin-bottom: 70px;
-  border-radius: 150px;
+  background: rgba(20,20,20,.9);
+  padding: 15px;
+  margin-bottom: 20px;
+  border-radius: 12px;
 }
 
 .producto img {
@@ -28,108 +40,178 @@ h1, h2 {
   max-width: 220px;
   display: block;
   margin: 0 auto 10px auto;
-  border-radius: 8px;
+  border-radius: 10px;
+}
+
+.precio {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.descripcion {
+  font-size: 14px;
+  opacity: .9;
+  margin-bottom: 10px;
 }
 
 button {
   padding: 10px;
-  margin: 4px 0;
+  margin: 5px 0;
+  width: 100%;
   font-size: 16px;
   cursor: pointer;
+  border-radius: 8px;
+  border: none;
 }
 
 .sabor-btn {
-  width: 100%;
+  background: #1f8a70;
+  color: #fff;
 }
 
-ul {
-  padding-left: 0;
+.sabor-btn:hover {
+  background: #166a55;
+}
+
+/* CARRITO FLOTANTE */
+#carritoFlotante {
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  background: #000;
+  padding: 12px;
+  border-radius: 12px;
+  width: 280px;
+  max-height: 70vh;
+  overflow-y: auto;
+  z-index: 999;
+}
+
+#carritoFlotante h3 {
+  margin-top: 0;
+  text-align: center;
 }
 
 li {
   list-style: none;
-  background: #eee;
-  padding: 10px;
-  margin-bottom: 8px;
-  border-radius: 8px;
+  background: #111;
+  padding: 8px;
+  margin-bottom: 6px;
+  border-radius: 6px;
 }
 
 .cantidad-btn {
-  padding: 5px 10px;
-  font-size: 18px;
-  margin: 0 5px;
+  padding: 4px 8px;
+  font-size: 16px;
+  margin: 0 3px;
+}
+
+/* QR */
+.qr {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.qr img {
+  width: 150px;
+  border-radius: 10px;
+}
+
+/* PC */
+@media (min-width: 768px) {
+  .producto {
+    display: flex;
+    gap: 20px;
+  }
+  .producto img {
+    max-width: 180px;
+  }
 }
 </style>
 </head>
 
 <body>
 
-<h1>Catálogo</h1>
+<div class="container">
+<h1>Catálogo de Vapes</h1>
 
 <!-- WAKA -->
 <div class="producto">
-  <h3>Waka Sopro 15000 Hits</h3>
-  <img src="wakasopro15000.jpg" alt="Waka Sopro 15000">
-  <p><strong>Precio:</strong> $350 MXN</p>
+  <img src="wakasopro15000.jpg">
+  <div>
+    <h3>Waka Sopro 15000 Hits</h3>
+    <p class="precio">$350 MXN</p>
+    <p class="descripcion">
+      Vape premium de larga duración.<br>
+      🔥 Promo: 2 por $600 MXN
+    </p>
 
-  <button class="sabor-btn" onclick="agregarProducto('Waka Sopro 15000','Strawberry Kiwi',350)">Agregar Strawberry Kiwi</button>
-  <button class="sabor-btn" onclick="agregarProducto('Waka Sopro 15000','Fruit Punch',350)">Agregar Fruit Punch</button>
-  <button class="sabor-btn" onclick="agregarProducto('Waka Sopro 15000','Mango Ice',350)">Agregar Mango Ice</button>
-  <button class="sabor-btn" onclick="agregarProducto('Waka Sopro 15000','Blueberry',350)">Agregar Blueberry</button>
+    <button class="sabor-btn" onclick="agregarProducto('Waka Sopro 15000','Strawberry Kiwi',350)">Strawberry Kiwi</button>
+    <button class="sabor-btn" onclick="agregarProducto('Waka Sopro 15000','Fruit Punch',350)">Fruit Punch</button>
+    <button class="sabor-btn" onclick="agregarProducto('Waka Sopro 15000','Mango Ice',350)">Mango Ice</button>
+    <button class="sabor-btn" onclick="agregarProducto('Waka Sopro 15000','Blueberry',350)">Blueberry</button>
+  </div>
 </div>
 
 <!-- DEATHROW -->
 <div class="producto">
-  <h3>DeathRow 7000 Hits</h3>
-  <p><strong>Precio:</strong> $100 MXN</p>
+  <div>
+    <h3>DeathRow 7000 Hits</h3>
+    <p class="precio">$100 MXN</p>
+    <p class="descripcion">Compacto, económico y rendidor.</p>
 
-  <button class="sabor-btn" onclick="agregarProducto('DeathRow 7000','Watermelon Ice',100)">Agregar Watermelon Ice</button>
-  <button class="sabor-btn" onclick="agregarProducto('DeathRow 7000','Strawberry Ice',100)">Agregar Strawberry Ice</button>
-  <button class="sabor-btn" onclick="agregarProducto('DeathRow 7000','Blue Razz',100)">Agregar Blue Razz</button>
-  <button class="sabor-btn" onclick="agregarProducto('DeathRow 7000','Grape Ice',100)">Agregar Grape Ice</button>
-  <button class="sabor-btn" onclick="agregarProducto('DeathRow 7000','Mango',100)">Agregar Mango</button>
+    <button class="sabor-btn" onclick="agregarProducto('DeathRow 7000','Watermelon Ice',100)">Watermelon Ice</button>
+    <button class="sabor-btn" onclick="agregarProducto('DeathRow 7000','Strawberry Ice',100)">Strawberry Ice</button>
+    <button class="sabor-btn" onclick="agregarProducto('DeathRow 7000','Blue Razz',100)">Blue Razz</button>
+    <button class="sabor-btn" onclick="agregarProducto('DeathRow 7000','Grape Ice',100)">Grape Ice</button>
+    <button class="sabor-btn" onclick="agregarProducto('DeathRow 7000','Mango',100)">Mango</button>
+  </div>
 </div>
 
 <!-- SNOOPY -->
 <div class="producto">
-  <h3>SnoopySmoke 15000 Hits</h3>
-  <p><strong>Precio:</strong> $100 MXN</p>
+  <div>
+    <h3>SnoopySmoke 15000 Hits</h3>
+    <p class="precio">$100 MXN</p>
+    <p class="descripcion">Gran cantidad de hits a bajo costo.</p>
 
-  <button class="sabor-btn" onclick="agregarProducto('SnoopySmoke 15000','Peach Ice',100)">Agregar Peach Ice</button>
-  <button class="sabor-btn" onclick="agregarProducto('SnoopySmoke 15000','Strawberry Banana',100)">Agregar Strawberry Banana</button>
-  <button class="sabor-btn" onclick="agregarProducto('SnoopySmoke 15000','Blueberry',100)">Agregar Blueberry</button>
-  <button class="sabor-btn" onclick="agregarProducto('SnoopySmoke 15000','Watermelon',100)">Agregar Watermelon</button>
-  <button class="sabor-btn" onclick="agregarProducto('SnoopySmoke 15000','Mint',100)">Agregar Mint</button>
+    <button class="sabor-btn" onclick="agregarProducto('SnoopySmoke 15000','Peach Ice',100)">Peach Ice</button>
+    <button class="sabor-btn" onclick="agregarProducto('SnoopySmoke 15000','Strawberry Banana',100)">Strawberry Banana</button>
+    <button class="sabor-btn" onclick="agregarProducto('SnoopySmoke 15000','Blueberry',100)">Blueberry</button>
+    <button class="sabor-btn" onclick="agregarProducto('SnoopySmoke 15000','Watermelon',100)">Watermelon</button>
+    <button class="sabor-btn" onclick="agregarProducto('SnoopySmoke 15000','Mint',100)">Mint</button>
+  </div>
 </div>
 
-<h2>Tu pedido</h2>
+<!-- QR -->
+<div class="qr">
+  <p>Escaneá para abrir el catálogo</p>
+  <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://mundovapeoss.github.io/catalogo/index.html">
+</div>
+</div>
+
+<!-- CARRITO FLOTANTE -->
+<div id="carritoFlotante">
+<h3>🛒 Tu pedido</h3>
 <ul id="carrito"></ul>
-
-<p style="text-align:center;"><strong>Total: $<span id="total">0</span> MXN</strong></p>
-
-<button style="width:100%;" onclick="vaciarCarrito()">🗑️ Vaciar carrito</button>
-<br><br>
-<button style="width:100%;" onclick="enviarWhatsApp()">Enviar pedido por WhatsApp</button>
+<p><strong>Total: $<span id="total">0</span> MXN</strong></p>
+<button onclick="vaciarCarrito()">Vaciar</button>
+<button onclick="enviarWhatsApp()">WhatsApp</button>
+</div>
 
 <script>
 let carrito = [];
 
 function agregarProducto(nombre, sabor, precio) {
   let item = carrito.find(p => p.nombre === nombre && p.sabor === sabor);
-
-  if (item) {
-    item.cantidad++;
-  } else {
-    carrito.push({ nombre, sabor, precio, cantidad: 1 });
-  }
+  if (item) item.cantidad++;
+  else carrito.push({ nombre, sabor, precio, cantidad: 1 });
   actualizarCarrito();
 }
 
-function cambiarCantidad(index, cambio) {
-  carrito[index].cantidad += cambio;
-  if (carrito[index].cantidad <= 0) {
-    carrito.splice(index, 1);
-  }
+function cambiarCantidad(i, c) {
+  carrito[i].cantidad += c;
+  if (carrito[i].cantidad <= 0) carrito.splice(i,1);
   actualizarCarrito();
 }
 
@@ -144,35 +226,29 @@ function actualizarCarrito() {
   ul.innerHTML = "";
   let total = 0;
 
-  carrito.forEach((item, index) => {
-    let subtotal = item.precio * item.cantidad;
-    total += subtotal;
-
-    let li = document.createElement("li");
-    li.innerHTML = `
-      <strong>${item.nombre}</strong><br>
-      ${item.sabor}<br>
-      $${item.precio} MXN x ${item.cantidad} = $${subtotal} MXN<br>
-      <button class="cantidad-btn" onclick="cambiarCantidad(${index}, -1)">➖</button>
-      <button class="cantidad-btn" onclick="cambiarCantidad(${index}, 1)">➕</button>
+  carrito.forEach((p,i)=>{
+    let sub = p.precio * p.cantidad;
+    total += sub;
+    ul.innerHTML += `
+      <li>
+        ${p.nombre}<br>${p.sabor}<br>
+        $${sub} MXN<br>
+        <button class="cantidad-btn" onclick="cambiarCantidad(${i},-1)">➖</button>
+        <button class="cantidad-btn" onclick="cambiarCantidad(${i},1)">➕</button>
+      </li>
     `;
-    ul.appendChild(li);
   });
 
   totalSpan.textContent = total;
 }
 
 function enviarWhatsApp() {
-  let mensaje = "Hola, quiero pedir:\n";
-
-  carrito.forEach(item => {
-    mensaje += `- ${item.nombre} (${item.sabor}) x${item.cantidad} = $${item.precio * item.cantidad} MXN\n`;
+  let msg = "Hola, quiero pedir:\n";
+  carrito.forEach(p=>{
+    msg += `- ${p.nombre} (${p.sabor}) x${p.cantidad} = $${p.precio*p.cantidad} MXN\n`;
   });
-
-  mensaje += `\nTotal: $${document.getElementById("total").textContent} MXN`;
-
-  let telefono = "529841964069";
-  window.open(`https://wa.me/${telefono}?text=${encodeURIComponent(mensaje)}`);
+  msg += `\nTotal: $${document.getElementById("total").textContent} MXN`;
+  window.open(`https://wa.me/529841964069?text=${encodeURIComponent(msg)}`);
 }
 </script>
 
