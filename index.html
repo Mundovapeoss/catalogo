@@ -7,65 +7,45 @@
 
 <style>
 body {
-  font-family: Arial, sans-serif;
   margin: 0;
-  padding: 0;
+  font-family: Arial, sans-serif;
   color: #fff;
-  background: url("Fondovape4.jpg") no-repeat center center fixed;
-  background-size: cover;
-}
-
-h1 {
-  text-align: center;
+  background: url("Fondovape4.jpg") center / cover fixed no-repeat;
 }
 
 .container {
-  text-align: center;
+  max-width: 900px;
+  margin: auto;
   padding: 15px;
+  text-align: center;
 }
 
-/* PRODUCTOS */
 .producto {
   background: rgba(20,20,20,.9);
+  border-radius: 12px;
   padding: 15px;
   margin: 20px auto;
-  border-radius: 12px;
   display: inline-block;
-  width: fit-content;
-  max-width: 95vw;
 }
 
 .producto img {
-  width: 220px;
-  display: block;
-  margin: 0 auto 10px;
+  max-width: 220px;
+  width: 100%;
   border-radius: 10px;
-}
-
-.precio {
-  font-size: 18px;
-  font-weight: bold;
-}
-
-.descripcion {
-  font-size: 14px;
-  margin-bottom: 5px;
-}
-
-.promo {
-  font-size: 13px;
-  opacity: .9;
   margin-bottom: 10px;
 }
 
-/* BOTONES */
+.precio { font-weight: bold; font-size: 18px; }
+.descripcion { font-size: 14px; margin-bottom: 8px; opacity:.9 }
+.stock { font-size: 13px; margin-bottom: 5px; color:#3cff00 }
+
 button {
-  padding: 10px;
-  margin: 5px 0;
   width: 100%;
+  margin: 5px 0;
+  padding: 10px;
   border-radius: 8px;
   border: none;
-  font-size: 16px;
+  font-size: 15px;
   cursor: pointer;
 }
 
@@ -74,59 +54,45 @@ button {
   color: white;
 }
 
+.sabor-btn:disabled {
+  background: #444;
+  cursor: not-allowed;
+}
+
 /* CARRITO */
-#cartIcon {
+#carritoIcono {
   position: fixed;
   bottom: 15px;
   right: 15px;
   background: #746399;
-  color: white;
-  width: 55px;
-  height: 55px;
-  border-radius: 50%;
-  font-size: 26px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  z-index: 1000;
-}
-
-#carritoFlotante {
-  position: fixed;
-  bottom: 80px;
-  right: 15px;
-  background: #222;
-  width: 220px;
   padding: 12px;
-  border-radius: 12px;
-  display: none;
+  border-radius: 50%;
+  font-size: 22px;
+  cursor: pointer;
   z-index: 999;
 }
 
-#carritoFlotante h3 {
-  margin-top: 0;
-  text-align: center;
+#carrito {
+  position: fixed;
+  bottom: 80px;
+  right: 15px;
+  width: 260px;
+  background: rgba(20,20,20,.95);
+  border-radius: 12px;
+  padding: 12px;
+  transform: scale(0);
+  transform-origin: bottom right;
+  transition: .3s;
 }
+
+#carrito.abierto { transform: scale(1); }
 
 li {
   list-style: none;
   background: #111;
-  padding: 6px;
-  margin-bottom: 5px;
+  margin-bottom: 6px;
+  padding: 8px;
   border-radius: 6px;
-  font-size: 14px;
-}
-
-.cantidad-btn {
-  padding: 4px 6px;
-  margin: 0 3px;
-}
-
-/* QR */
-.qr img {
-  width: 120px;
-  margin-top: 20px;
 }
 </style>
 </head>
@@ -138,120 +104,89 @@ li {
 
 <!-- WAKA -->
 <div class="producto">
-<img src="wakasopro15000.jpg">
-<h3>Waka Sopro 15000</h3>
-<p class="precio">$350 MXN</p>
-<p class="promo">🔥 2x $600 | 3x $850 | 4x $1100</p>
+  <img src="wakasopro15000.jpg">
+  <h3>Waka Sopro 15000</h3>
+  <p class="precio">$350 MXN</p>
 
-<button class="sabor-btn" onclick="agregarProducto('Waka','Strawberry Kiwi',350)">Strawberry Kiwi</button>
-<button class="sabor-btn" onclick="agregarProducto('Waka','Fruit Punch',350)">Fruit Punch</button>
-<button class="sabor-btn" onclick="agregarProducto('Waka','Mango Ice',350)">Mango Ice</button>
-<button class="sabor-btn" onclick="agregarProducto('Waka','Blueberry',350)">Blueberry</button>
+  <button id="waka-sk" class="sabor-btn" onclick="agregar('Waka','Strawberry Kiwi',350)">
+    Strawberry Kiwi (<span id="stock-waka-sk"></span>)
+  </button>
+
+  <button id="waka-mi" class="sabor-btn" onclick="agregar('Waka','Mango Ice',350)">
+    Mango Ice (<span id="stock-waka-mi"></span>)
+  </button>
 </div>
 
-<!-- DEATHROW -->
-<div class="producto">
-<img src="DeathRow7000.jpg">
-<h3>DeathRow 7000</h3>
-<p class="precio">$100 MXN</p>
-<p class="promo">🔥 2x $180 | 3x $250 | 4x $320</p>
-
-<button class="sabor-btn" onclick="agregarProducto('DeathRow','Watermelon Ice',100)">Watermelon Ice</button>
-<button class="sabor-btn" onclick="agregarProducto('DeathRow','Strawberry Ice',100)">Strawberry Ice</button>
-<button class="sabor-btn" onclick="agregarProducto('DeathRow','Blue Razz',100)">Blue Razz</button>
-<button class="sabor-btn" onclick="agregarProducto('DeathRow','Grape Ice',100)">Grape Ice</button>
-<button class="sabor-btn" onclick="agregarProducto('DeathRow','Mango',100)">Mango</button>
 </div>
-
-<!-- SNOOPY -->
-<div class="producto">
-<img src="SnoopySmoke15000.jpg">
-<h3>SnoopySmoke 15000</h3>
-<p class="precio">$100 MXN</p>
-<p class="promo">🔥 2x $180 | 3x $250 | 4x $320</p>
-
-<button class="sabor-btn" onclick="agregarProducto('Snoopy','Peach Ice',100)">Peach Ice</button>
-<button class="sabor-btn" onclick="agregarProducto('Snoopy','Strawberry Banana',100)">Strawberry Banana</button>
-<button class="sabor-btn" onclick="agregarProducto('Snoopy','Blueberry',100)">Blueberry</button>
-<button class="sabor-btn" onclick="agregarProducto('Snoopy','Watermelon',100)">Watermelon</button>
-<button class="sabor-btn" onclick="agregarProducto('Snoopy','Mint',100)">Mint</button>
-</div>
-
-<div class="qr">
-<img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://mundovapeoss.github.io/catalogo/index.html">
-</div>
-</div>
-
-<!-- ICONO -->
-<div id="cartIcon" onclick="toggleCarrito()">🛒</div>
 
 <!-- CARRITO -->
-<div id="carritoFlotante">
-<h3>Tu pedido ❌</h3>
-<ul id="carrito"></ul>
-<p><b>Total: $<span id="total">0</span> MXN</b></p>
-<button onclick="vaciarCarrito()">Vaciar</button>
+<div id="carritoIcono" onclick="toggleCarrito()">🛒</div>
+
+<div id="carrito">
+<h3>Tu Pedido</h3>
+<ul id="lista"></ul>
+<p><strong>Total: $<span id="total">0</span> MXN</strong></p>
 <button onclick="enviarWhatsApp()">WhatsApp</button>
 </div>
 
 <script>
 let carrito = [];
 
-const promos = {
-  Waka: {2:600,3:850,4:1100},
-  DeathRow: {2:180,3:250,4:320},
-  Snoopy: {2:180,3:250,4:320}
+/* STOCK */
+let stock = {
+  "Waka-Strawberry Kiwi": 3,
+  "Waka-Mango Ice": 2
 };
 
-function agregarProducto(nombre, sabor, precio) {
-  carrito.push({nombre,sabor,precio});
-  actualizarCarrito();
+function actualizarStockUI() {
+  document.getElementById("stock-waka-sk").innerText = "Stock: " + stock["Waka-Strawberry Kiwi"];
+  document.getElementById("stock-waka-mi").innerText = "Stock: " + stock["Waka-Mango Ice"];
+
+  document.getElementById("waka-sk").disabled = stock["Waka-Strawberry Kiwi"] <= 0;
+  document.getElementById("waka-mi").disabled = stock["Waka-Mango Ice"] <= 0;
 }
 
-function calcularTotal() {
-  let total = 0;
-  let conteo = {};
+function agregar(nombre,sabor,precio){
+  let key = `${nombre}-${sabor}`;
+  if(stock[key] <= 0) return;
 
-  carrito.forEach(p=>{
-    conteo[p.nombre] = (conteo[p.nombre] || 0) + 1;
+  stock[key]--;
+
+  let item = carrito.find(p=>p.nombre===nombre && p.sabor===sabor);
+  item ? item.cantidad++ : carrito.push({nombre,sabor,precio,cantidad:1});
+  actualizar();
+}
+
+function actualizar(){
+  let ul=document.getElementById("lista");
+  ul.innerHTML="";
+  let total=0;
+
+  carrito.forEach((i,idx)=>{
+    total+=i.precio*i.cantidad;
+    ul.innerHTML+=`
+    <li>
+      ${i.nombre} (${i.sabor})<br>
+      x${i.cantidad}
+    </li>`;
   });
 
-  for (let prod in conteo) {
-    let cant = conteo[prod];
-    if (promos[prod] && promos[prod][cant]) {
-      total += promos[prod][cant];
-    } else {
-      total += cant * carrito.find(p=>p.nombre===prod).precio;
-    }
-  }
-  return total;
+  document.getElementById("total").innerText=total;
+  actualizarStockUI();
 }
 
-function actualizarCarrito() {
-  let ul = document.getElementById("carrito");
-  ul.innerHTML = "";
-  carrito.forEach(p=>{
-    ul.innerHTML += `<li>${p.nombre} - ${p.sabor}</li>`;
-  });
-  document.getElementById("total").textContent = calcularTotal();
+function toggleCarrito(){
+  document.getElementById("carrito").classList.toggle("abierto");
 }
 
-function vaciarCarrito() {
-  carrito = [];
-  actualizarCarrito();
-}
-
-function toggleCarrito() {
-  let c = document.getElementById("carritoFlotante");
-  c.style.display = c.style.display === "none" ? "block" : "none";
-}
-
-function enviarWhatsApp() {
-  let msg = "Hola, quiero pedir:\n";
-  carrito.forEach(p=>msg+=`- ${p.nombre} ${p.sabor}\n`);
-  msg+=`\nTotal: $${calcularTotal()} MXN`;
+function enviarWhatsApp(){
+  let msg="🛒 PEDIDO\n\n";
+  carrito.forEach(i=>msg+=`${i.nombre} (${i.sabor}) x${i.cantidad}\n`);
+  msg+=`\nTOTAL: $${document.getElementById("total").innerText} MXN`;
   window.open(`https://wa.me/529841964069?text=${encodeURIComponent(msg)}`);
 }
+
+actualizarStockUI();
 </script>
 
 </body>
