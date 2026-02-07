@@ -13,6 +13,7 @@ body {
   background: url("Fondovape4.jpg") center / cover fixed no-repeat;
 }
 
+/* CONTENEDOR */
 .container {
   max-width: 900px;
   margin: auto;
@@ -20,6 +21,7 @@ body {
   text-align: center;
 }
 
+/* PRODUCTOS */
 .producto {
   background: rgba(20,20,20,.9);
   border-radius: 12px;
@@ -37,7 +39,7 @@ body {
 
 .precio { font-weight: bold; font-size: 18px; }
 .descripcion { font-size: 14px; margin-bottom: 8px; opacity:.9 }
-.stock { font-size: 13px; margin-bottom: 5px; color:#3cff00 }
+.ahorro { color: #3cff00; font-size: 14px; margin-bottom: 8px; }
 
 button {
   width: 100%;
@@ -49,15 +51,8 @@ button {
   cursor: pointer;
 }
 
-.sabor-btn {
-  background: #746399;
-  color: white;
-}
-
-.sabor-btn:disabled {
-  background: #444;
-  cursor: not-allowed;
-}
+.sabor-btn { background: #746399; color: white; }
+.sabor-btn:disabled { background: #444; cursor: not-allowed; }
 
 /* CARRITO */
 #carritoIcono {
@@ -70,6 +65,7 @@ button {
   font-size: 22px;
   cursor: pointer;
   z-index: 999;
+  animation-duration: .3s;
 }
 
 #carrito {
@@ -83,6 +79,7 @@ button {
   transform: scale(0);
   transform-origin: bottom right;
   transition: .3s;
+  z-index: 998;
 }
 
 #carrito.abierto { transform: scale(1); }
@@ -94,6 +91,23 @@ li {
   padding: 8px;
   border-radius: 6px;
 }
+
+.cantidad-btn {
+  padding: 4px 8px;
+  margin: 2px;
+}
+
+/* ANIMACIONES */
+@keyframes shake {
+  0%{transform:translateX(0)}
+  25%{transform:translateX(-4px)}
+  50%{transform:translateX(4px)}
+  75%{transform:translateX(-4px)}
+  100%{transform:translateX(0)}
+}
+
+.shake { animation: shake .3s; }
+
 </style>
 </head>
 
@@ -107,15 +121,38 @@ li {
   <img src="wakasopro15000.jpg">
   <h3>Waka Sopro 15000</h3>
   <p class="precio">$350 MXN</p>
+  <p class="descripcion">🔥 Promo: 2 x $600 MXN</p>
+  <p class="ahorro" id="ahorro-waka"></p>
 
-  <button id="waka-sk" class="sabor-btn" onclick="agregar('Waka','Strawberry Kiwi',350)">
-    Strawberry Kiwi (<span id="stock-waka-sk"></span>)
-  </button>
-
-  <button id="waka-mi" class="sabor-btn" onclick="agregar('Waka','Mango Ice',350)">
-    Mango Ice (<span id="stock-waka-mi"></span>)
-  </button>
+  <button class="sabor-btn" onclick="agregar('Waka','Strawberry Kiwi',350)">Strawberry Kiwi</button>
+  <button class="sabor-btn" onclick="agregar('Waka','Mango Ice',350)">Mango Ice</button>
 </div>
+
+<!-- DEATHROW -->
+<div class="producto">
+  <img src="DeathRow7000.jpg">
+  <h3>DeathRow 7000</h3>
+  <p class="precio">$100 MXN</p>
+  <p class="descripcion">Promo: 3 x $250 MXN</p>
+  <p class="ahorro" id="ahorro-death"></p>
+
+  <button class="sabor-btn" onclick="agregar('DeathRow','Blue Razz',100)">Blue Razz</button>
+  <button class="sabor-btn" onclick="agregar('DeathRow','Grape Ice',100)">Grape Ice</button>
+</div>
+
+<!-- SNOOPY -->
+<div class="producto">
+  <img src="SnoopySmoke15000.jpg">
+  <h3>SnoopySmoke 15000</h3>
+  <p class="precio">$100 MXN</p>
+  <p class="descripcion">Promo: 4 x $350 MXN</p>
+  <p class="ahorro" id="ahorro-snoopy"></p>
+
+  <button class="sabor-btn" onclick="agregar('Snoopy','Mint',100)">Mint</button>
+  <button class="sabor-btn" onclick="agregar('Snoopy','Watermelon',100)">Watermelon</button>
+</div>
+
+<button onclick="compartir()">📤 Compartir Catálogo</button>
 
 </div>
 
@@ -132,28 +169,17 @@ li {
 <script>
 let carrito = [];
 
-/* STOCK */
-let stock = {
-  "Waka-Strawberry Kiwi": 3,
-  "Waka-Mango Ice": 2
+const promos = {
+  Waka:{cantidad:2, precio:600},
+  DeathRow:{cantidad:3, precio:250},
+  Snoopy:{cantidad:4, precio:350}
 };
 
-function actualizarStockUI() {
-  document.getElementById("stock-waka-sk").innerText = "Stock: " + stock["Waka-Strawberry Kiwi"];
-  document.getElementById("stock-waka-mi").innerText = "Stock: " + stock["Waka-Mango Ice"];
-
-  document.getElementById("waka-sk").disabled = stock["Waka-Strawberry Kiwi"] <= 0;
-  document.getElementById("waka-mi").disabled = stock["Waka-Mango Ice"] <= 0;
-}
-
 function agregar(nombre,sabor,precio){
-  let key = `${nombre}-${sabor}`;
-  if(stock[key] <= 0) return;
-
-  stock[key]--;
-
   let item = carrito.find(p=>p.nombre===nombre && p.sabor===sabor);
   item ? item.cantidad++ : carrito.push({nombre,sabor,precio,cantidad:1});
+  document.getElementById("carritoIcono").classList.add("shake");
+  setTimeout(()=>document.getElementById("carritoIcono").classList.remove("shake"),300);
   actualizar();
 }
 
@@ -162,17 +188,26 @@ function actualizar(){
   ul.innerHTML="";
   let total=0;
 
+  Object.keys(promos).forEach(p=>{
+    let count=carrito.filter(i=>i.nombre===p).reduce((a,b)=>a+b.cantidad,0);
+    if(count>=promos[p].cantidad){
+      total+=Math.floor(count/promos[p].cantidad)*promos[p].precio;
+      total+= (count%promos[p].cantidad)*100;
+      document.getElementById("ahorro-"+p.toLowerCase()).innerText="Promo aplicada ✔️";
+    }
+  });
+
   carrito.forEach((i,idx)=>{
     total+=i.precio*i.cantidad;
     ul.innerHTML+=`
-    <li>
-      ${i.nombre} (${i.sabor})<br>
-      x${i.cantidad}
+    <li>${i.nombre}<br>${i.sabor}<br>
+    <button class="cantidad-btn" onclick="i.cantidad--;actualizar()">➖</button>
+    ${i.cantidad}
+    <button class="cantidad-btn" onclick="i.cantidad++;actualizar()">➕</button>
     </li>`;
   });
 
   document.getElementById("total").innerText=total;
-  actualizarStockUI();
 }
 
 function toggleCarrito(){
@@ -186,7 +221,11 @@ function enviarWhatsApp(){
   window.open(`https://wa.me/529841964069?text=${encodeURIComponent(msg)}`);
 }
 
-actualizarStockUI();
+function compartir(){
+  navigator.share
+  ? navigator.share({title:'Catálogo Vapes',url:location.href})
+  : alert("Copiá el link y compartilo");
+}
 </script>
 
 </body>
