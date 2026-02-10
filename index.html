@@ -1,4 +1,193 @@
-<!-- PEGAR TODO TU HTML IGUAL HASTA <script> -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Catálogo Vapes</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  color: #fff;
+  background: url("Fondovape5.jpg") center / cover fixed no-repeat;
+}
+
+.container {
+  max-width: 900px;
+  margin: auto;
+  padding: 15px;
+  text-align: center;
+}
+
+.producto {
+  background: rgba(20,20,20,.9);
+  border-radius: 12px;
+  padding: 15px;
+  margin: 20px auto;
+  display: inline-block;
+}
+
+.producto img {
+  max-width: 220px;
+  width: 100%;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+.precio { font-weight: bold; font-size: 18px; }
+.descripcion { font-size: 14px; margin-bottom: 6px; opacity:.9 }
+
+.stock { font-size: 13px; }
+.agotado { color: red; font-weight: bold; }
+
+button {
+  width: 100%;
+  margin: 5px 0;
+  padding: 10px;
+  border-radius: 8px;
+  border: none;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.sabor-btn { background: #746399; color: white; }
+.sabor-btn:disabled { background: #444; cursor: not-allowed; }
+
+/* CARRITO */
+#carritoIcono {
+  position: fixed;
+  bottom: 15px;
+  right: 15px;
+  background: #746399;
+  padding: 12px;
+  border-radius: 50%;
+  font-size: 22px;
+  cursor: pointer;
+  z-index: 999;
+}
+
+#carrito {
+  position: fixed;
+  bottom: 80px;
+  right: 15px;
+  width: 260px;
+  background: #831bde;
+  border-radius: 12px;
+  padding: 12px;
+  transform: scale(0);
+  transform-origin: bottom right;
+  transition: .3s;
+}
+
+#carrito.abierto { transform: scale(1); }
+
+li {
+  list-style: none;
+  background: #111;
+  margin-bottom: 6px;
+  padding: 8px;
+  border-radius: 6px;
+}
+
+.cantidad-btn { padding: 4px 8px; margin: 2px; }
+
+/* ANIMACIÓN */
+@keyframes shake {
+  0%{transform:translateX(0)}
+  25%{transform:translateX(-4px)}
+  50%{transform:translateX(4px)}
+  75%{transform:translateX(-4px)}
+  100%{transform:translateX(0)}
+}
+.shake { animation: shake .3s; }
+</style>
+</head>
+
+<body>
+
+<div class="container">
+<h1>Catálogo de Vapes</h1>
+
+<!-- WAKA -->
+<div class="producto">
+<img src="wakasopro15000.jpg">
+<h3>Waka Sopro 15000</h3>
+<p class="precio">$350 MXN</p>
+<p class="descripcion">Vape · 15,000 puffs Dual Mesh · Alta duración</p>
+<p class="descripcion">Promos: 1x$350 · 2x$600 · 3x$850 · 4x$1100</p>
+
+<button id="waka-strawberry-kiwi" class="sabor-btn" onclick="agregar('Waka','Strawberry Kiwi')">Strawberry Kiwi (<span class="stock" id="stock-waka-strawberry-kiwi"></span>)</button>
+<button id="waka-fruit-punch" class="sabor-btn" onclick="agregar('Waka','Fruit Punch')">Fruit Punch (<span class="stock" id="stock-waka-fruit-punch"></span>)</button>
+<button id="waka-mango-ice" class="sabor-btn" onclick="agregar('Waka','Mango Ice')">Mango Ice (<span class="stock" id="stock-waka-mango-ice"></span>)</button>
+<button id="waka-blueberry" class="sabor-btn" onclick="agregar('Waka','Blueberry')">Blueberry (<span class="stock" id="stock-waka-blueberry"></span>)</button>
+</div>
+
+<!-- WAKA DUO -->
+<div class="producto">
+<img src="WakaDuo25000.jpg">
+<h3>Waka Duo 25000</h3>
+<p class="precio">$350 MXN</p>
+<p class="descripcion">Vape · 25,000 puffs Turbo · 2 Power modes · Alta duración</p>
+<p class="descripcion">Promos: 1x$350 · 2x$600 · 3x$850 · 4x$1100</p>
+
+<button id="waka-strawberry-banana" class="sabor-btn" onclick="agregar('Waka','Strawberry Banana')">Strawberry Banana (<span class="stock" id="stock-waka-strawberry-banana"></span>)</button>
+<button id="waka-triple-mango" class="sabor-btn" onclick="agregar('Waka','Triple Mango')">Triple Mango (<span class="stock" id="stock-waka-triple-mango"></span>)</button>
+<button id="waka-cranberry-grape" class="sabor-btn" onclick="agregar('Waka','Cranberry Grape')">Cranberry Grape (<span class="stock" id="stock-waka-cranberry-grape"></span>)</button>
+<button id="waka-blue-razz-blackberry" class="sabor-btn" onclick="agregar('Waka','Blue Razz Blackberry')">Blue Razz Blackberry (<span class="stock" id="stock-waka-blue-razz-blackberry"></span>)</button>
+<button id="waka-watermelon-chill" class="sabor-btn" onclick="agregar('Waka','Watermelon Chill')">Watermelon Chill (<span class="stock" id="stock-waka-watermelon-chill"></span>)</button>
+<button id="waka-kiwi-passion-guava" class="sabor-btn" onclick="agregar('Waka','Kiwi Passion Guava')">Kiwi Passion Guava (<span class="stock" id="stock-waka-kiwi-pasion-guava"></span>)</button>
+<button id="waka-strawberry-raspberry" class="sabor-btn" onclick="agregar('Waka','Strawberry Raspberry')">Strawberry Raspberry (<span class="stock" id="stock-waka-strawberry-raspberry"></span>)</button>
+<button id="waka-sour-fruit-gummy" class="sabor-btn" onclick="agregar('Waka','Sour Fruit Gummy')">Sour Fruit Gummy (<span class="stock" id="stock-waka-sour-fruit-gummy"></span>)</button>
+</div>
+  
+  <!-- DEATHROW -->
+<div class="producto">
+<img src="DeathRow7000.jpg">
+<h3>DeathRow 7000</h3>
+<p class="precio">$100 MXN</p>
+<p class="descripcion">Compacto · Economico de 7,000 Hits </p>
+<p class="descripcion">Promos: 1x$200 · 2x$350 · 3x$500 · 4x$625</p>
+
+<button id="death-sour-apple" class="sabor-btn" onclick="agregar('DeathRow','Sour Apple')">Sour Apple (<span class="stock" id="stock-death-sour-apple"></span>)</button>
+<button id="death-tobacco" class="sabor-btn" onclick="agregar('DeathRow','Tobacco')">Tobacco (<span class="stock" id="stock-death-tobacco"></span>)</button>
+<button id="death-cherry-ice" class="sabor-btn" onclick="agregar('DeathRow','Cherry Ice')">Cherry Ice (<span class="stock" id="stock-death-cherry-ice"></span>)</button>
+<button id="death-peach-grape" class="sabor-btn" onclick="agregar('DeathRow','Peach Grape')">Grape Ice (<span class="stock" id="stock-death-peach-grape"></span>)</button>
+<button id="death-peach-ice" class="sabor-btn" onclick="agregar('DeathRow','Peach Ice')">Peach Ice (<span class="stock" id="stock-death-peach-ice"></span>)</button>
+<button id="death-clear" class="sabor-btn" onclick="agregar('DeathRow','Clear')">Clear (<span class="stock" id="stock-death-clear"></span>)</button>
+<button id="death-mango-lychee" class="sabor-btn" onclick="agregar('DeathRow','Mango Lychee')">Mango Lychee (<span class="stock" id="stock-death-mango-lychee"></span>)</button>
+</div>
+
+<!-- SNOOPY -->
+<div class="producto">
+<img src="SnoopySmoke15000.jpg">
+<h3>SnoopySmoke 15000</h3>
+<p class="precio">$100 MXN</p>
+<p class="descripcion">Sabores intensos · Gran rendimiento 15,000 Hits </p>
+<p class="descripcion">Promos: 1x$250 · 2x$450 · 3x$650 · 4x$800</p>
+
+<button id="snoopy-lush-ice" class="sabor-btn" onclick="agregar('Snoopy','Lush Ice')">Lush Ice (<span class="stock" id="stock-snoopy-lush-ice"></span>)</button>
+<button id="snoopy-strawberry-banana" class="sabor-btn" onclick="agregar('Snoopy','Strawberry Banana')">Strawberry Banana (<span class="stock" id="stock-snoopy-strawberry-banana"></span>)</button>
+<button id="snoopy-pink-lemonade" class="sabor-btn" onclick="agregar('Snoopy','Pink Lemonade')">Pink Lemonade (<span class="stock" id="stock-snoopy-pink-lemonade"></span>)</button>
+<button id="snoopy-strawberry-ice" class="sabor-btn" onclick="agregar('Snoopy','Strawberry Ice')">Strawberry Ice (<span class="stock" id="stock-snoopy-strawberry-ice"></span>)</button>
+<button id="snoopy-mexican-mango-ice" class="sabor-btn" onclick="agregar('Snoopy','Mexican Mango Ice')">Mexican Mango Ice (<span class="stock" id="stock-snoopy-mexican-mango-ice"></span>)</button>
+<button id="snoopy-bahama-mama" class="sabor-btn" onclick="agregar('Snoopy','Bahama Mama')">Bahama Mama (<span class="stock" id="stock-snoopy-bahama-mama"></span>)</button>
+<button id="snoopy-tropical-rainbow-blast" class="sabor-btn" onclick="agregar('Snoopy','Tropical Rainbow Blast')">Tropical Rainbow Blast (<span class="stock" id="stock-tropical-rainbow-blast"></span>)</button>
+<button id="snoopy-strawberry-peach-mint" class="sabor-btn" onclick="agregar('Snoopy','Strawberry Peach Mint')">Strawberry Peach Mint (<span class="stock" id="stock-snoopy-trawberry-peach-mint"></span>)</button>
+</div>
+
+<button onclick="compartir()">📤 Compartir Catálogo</button>
+</div>
+
+<!-- CARRITO -->
+<div id="carritoIcono" onclick="toggleCarrito()">🛒</div>
+
+<div id="carrito">
+<h3>Tu Pedido</h3>
+<ul id="lista"></ul>
+<p><strong>Total: $<span id="total">0</span> MXN</strong></p>
+<button onclick="enviarWhatsApp()">WhatsApp</button>
+</div>
 
 <script>
 let carrito = [];
