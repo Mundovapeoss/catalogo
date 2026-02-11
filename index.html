@@ -127,9 +127,9 @@ li {
 <div class="producto">
 <img src="WakaDuo25000.jpg">
 <h3>Waka Duo 25000</h3>
-<p class="precio">$350 MXN</p>
+<p class="precio">$450 MXN</p>
 <p class="descripcion">Vape · 25,000 puffs Turbo · 5% Nicotina · 2 Power modes · Alta duración</p>
-<p class="descripcion">Promos: 1x$350 · 2x$600 · 3x$850 · 4x$1100</p>
+<p class="descripcion">Promos: 1x$450 · 2x$800 ·</p>
 
 <button id="waka-strawberry-banana" class="sabor-btn" onclick="agregar('Waka','Strawberry Banana')">Strawberry Banana (<span class="stock" id="stock-waka-strawberry-banana"></span>)</button>
 <button id="waka-triple-mango" class="sabor-btn" onclick="agregar('Waka','Triple Mango')">Triple Mango (<span class="stock" id="stock-waka-triple-mango"></span>)</button>
@@ -145,9 +145,9 @@ li {
 <div class="producto">
 <img src="DeathRow7000.jpg">
 <h3>DeathRow 7000</h3>
-<p class="precio">$100 MXN</p>
+<p class="precio">$150 MXN</p>
 <p class="descripcion">Compacto · Economico de 7,000 Hits · 5% Nicotina · </p>
-<p class="descripcion">Promos: 1x$200 · 2x$350 · 3x$500 · 4x$625</p>
+<p class="descripcion">Promos: 1x$150 · 2x$220 </p>
 
 <button id="death-sour-apple" class="sabor-btn" onclick="agregar('DeathRow','Sour Apple')">Sour Apple (<span class="stock" id="stock-death-sour-apple"></span>)</button>
 <button id="death-tobacco" class="sabor-btn" onclick="agregar('DeathRow','Tobacco')">Tobacco (<span class="stock" id="stock-death-tobacco"></span>)</button>
@@ -162,9 +162,9 @@ li {
 <div class="producto">
 <img src="SnoopySmoke15000.jpg">
 <h3>SnoopySmoke 15000</h3>
-<p class="precio">$100 MXN</p>
+<p class="precio">$250 MXN</p>
 <p class="descripcion">Sabores intensos · Gran rendimiento 15,000 Hits · 5% Nicotina · </p>
-<p class="descripcion">Promos: 1x$250 · 2x$450 · 3x$650 · 4x$800</p>
+<p class="descripcion">Promos: 1x$250 · 2x$450 </p>
 
 <button id="snoopy-lush-ice" class="sabor-btn" onclick="agregar('Snoopy','Lush Ice')">Lush Ice (<span class="stock" id="stock-snoopy-lush-ice"></span>)</button>
 <button id="snoopy-strawberry-banana" class="sabor-btn" onclick="agregar('Snoopy','Strawberry Banana')">Strawberry Banana (<span class="stock" id="stock-snoopy-strawberry-banana"></span>)</button>
@@ -232,8 +232,9 @@ let stock = {
 
 const promos={
   Waka:[350,600,850,1100],
-  DeathRow:[200,350,500,625],
-  Snoopy:[250,450,650,800]
+  Wakaduo:[450,800],
+  DeathRow:[150,220],
+  Snoopy:[250,450]
 };
 
 function agregar(nombre,sabor){
