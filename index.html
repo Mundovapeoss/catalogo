@@ -302,33 +302,3 @@ function actualizarStockUI(){
 
 actualizarStockUI();
   <script>
-function toggleCarrito(){
-  document.getElementById("carrito").classList.toggle("abierto");
-}
-
-function enviarWhatsApp(){
-  if(carrito.length === 0) return;
-
-  let msg = "🛒 *Pedido*\n\n";
-  carrito.forEach(i=>{
-    msg += `${i.nombre} - ${i.sabor} x${i.cantidad}\n`;
-  });
-  msg += `\nTOTAL: $${document.getElementById("total").innerText} MXN`;
-
-  window.open(
-    "https://wa.me/521000000000?text=" + encodeURIComponent(msg),
-    "_blank"
-  );
-}
-
-function compartir(){
-  if(navigator.share){
-    navigator.share({
-      title: "Catálogo Vapes",
-      url: location.href
-    });
-  } else {
-    alert("Copiá el link para compartir el catálogo");
-  }
-}
-</script>
